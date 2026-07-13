@@ -1,0 +1,23 @@
+# Normalize line endings: store text files with LF in the repository,
+# regardless of contributors' OS. Prevents CRLF/LF churn showing up as
+# spurious diffs (see the whole-repo CRLF flip we cleaned up).
+* text=auto eol=lf
+
+# Windows-only scripts should keep CRLF on checkout.
+*.ps1  text eol=crlf
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+
+# Binary assets: never touch line endings or try to diff/merge as text.
+*.chr      binary
+*.nes      binary
+*.dbg      binary
+*.pal      binary
+*.png      binary
+*.bmp      binary
+*.o        binary
+*.zip      binary
+*.tar.gz   binary
+*.rle.nam  binary
+*.rle.bin  binary
+*.rle.chr  binary

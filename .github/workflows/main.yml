@@ -16,6 +16,15 @@ jobs:
         run: "cp -a /root/. /github/home"
       - name: Install dependencies
         run: create-nes-game download-dependencies --assume-yes
+      # The real graphics/tiles.chr and graphics/sprites.chr contain artwork from
+      # the original Pac-Man ROM (Namco copyright) and are intentionally git-ignored,
+      # so they are absent in CI. Substitute the non-copyrighted ascii.chr (same 4KB
+      # segment size) as a placeholder so the build and tests can validate the code.
+      # This never runs locally where the real files are present.
+      - name: Provide placeholder CHR graphics for CI
+        run: |
+          [ -f graphics/tiles.chr ] || cp graphics/ascii.chr graphics/tiles.chr
+          [ -f graphics/sprites.chr ] || cp graphics/ascii.chr graphics/sprites.chr
       - name: Build the game
         run: create-nes-game build
       - name: Start xvfb 
